@@ -1,0 +1,14 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+        <div class="container-fluid">
+          <a routerLink="home" class="navbar-brand"> Home </a>
+            <div class="navbar-nav ms-auto" *ngIf="!authenticated">
+              <a class="btn btn-outline-warning btn-small me-2" routerLink="login">Login </a>
+              <a class="btn btn-outline-warning btn-small" routerLink="signup">SignUp</a>
+            </div>
+            <div class="navbar-nav ms-auto" *ngIf="authenticated">
+              <a class="btn btn-outline-warning btn-small me-2" routerLink="/userProfile">Profile</a>
+              <a class="btn btn-outline-danger btn-small " routerLink="/login" (click)="logout()">Logout </a>
+            </div>
+        </div>
+  </nav>
+
