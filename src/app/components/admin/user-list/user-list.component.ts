@@ -21,7 +21,10 @@ import { Ng2SearchPipe } from 'ng2-search-filter';
 export class UserListComponent implements OnInit {
   searchText: string;
   authenticate = false;
-
+  users: Users[];
+  filteredUsers: Users[];
+  
+    
   constructor(
     private http: HttpClient,
     private formBuilder: FormBuilder,
@@ -49,13 +52,20 @@ export class UserListComponent implements OnInit {
           this.router.navigate(['/adminLogin']);
           Emitters.authEmitter.emit(false);
         }
+
       );
    
-        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        // const isLoggedIn = localStorage.getItem('isLoggedIn');
     
-        if (!isLoggedIn) {
-          this.router.navigate(['/adminLogin']);
-        }
+        // if (!isLoggedIn) {
+        //   this.router.navigate(['/adminLogin']);
+        // }  
+
+        //assingning values to 
+        this.userdata$.subscribe((data) => {
+          this.users = data;
+          this.filteredUsers = [...data];
+        });
     
   }
 
@@ -95,6 +105,18 @@ export class UserListComponent implements OnInit {
     this.router.navigate(['/createUsers'])
   }
 
+//for search
+  search(): void {
+    if (!this.searchText) {
+      this.filteredUsers = [...this.users];
+      return;
+    }
+  
+    this.filteredUsers = this.users.filter((user) =>
+      user.name.toLowerCase().includes(this.searchText.toLowerCase())
+    );
+  }
+  
  
   logout():void{
     this.http.post('http://localhost:5000/adminLogout',{},{

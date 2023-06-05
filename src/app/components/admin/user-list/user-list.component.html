@@ -21,8 +21,8 @@
             </div>
             <div>
               <div class="input-group">
-                <input placeholder="Search" type="text" [(ngModel)]="searchText" class="input">
-                <button class="btn btn-outline-secondary" type="button">Search</button>
+                <input placeholder="Search" type="text" [(ngModel)]="searchText" class="input" (input)="search()" >
+                <button class="btn btn-outline-secondary" type="button" (click)="search()">Search</button>
               </div>
             </div>
           </div>
@@ -41,18 +41,24 @@
                 <th scope="col">Actions</th>
               </tr>
             </thead>
-            <tbody *ngIf="userdata$ | async as userdata">
-              <tr *ngFor="let item of userdata  let i = index">
+            <tbody *ngIf="filteredUsers.length > 0;else noData">
+              <tr *ngFor="let user of filteredUsers  let i = index">
                 <th scope="row">{{ i + 1 }}</th>
-                <td>{{ item.name }}</td>
-                <td>{{ item.email }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
                
                 <td>
-                  <button class="btn btn-outline-warning me-2"  (click)="editUser(item._id)">Edit</button>
-                  <button class="btn btn-outline-danger" (click)="deleteUser(item._id)">Delete</button>
+                  <button class="btn btn-outline-warning me-2"  (click)="editUser(user._id)">Edit</button>
+                  <button class="btn btn-outline-danger" (click)="deleteUser(user._id)">Delete</button>
                 </td>
               </tr>
             </tbody>
+            <ng-template #noData>
+              <tr>
+                <td colspan="2">No matching users found.</td>
+                <!-- Add other table cells here if needed -->
+              </tr>
+            </ng-template>
           </table>
         </div>
       </div>

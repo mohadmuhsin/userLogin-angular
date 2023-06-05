@@ -13,11 +13,12 @@ import { Profile, Users } from 'src/app/models/userModels';
 @Injectable()
 export class AppEffect {
   constructor(private actions$: Actions, private appService: appService) {} // Update the injection for appService
+
   loadAllUsers$ = createEffect(() =>
     this.actions$.pipe(
       ofType(retrievePosts),
       switchMap(() => {
-        console.log(this.actions$,this.appService,'load all users');
+        console.log(this.actions$, this.appService, 'load all users');
         return this.appService
           .loadUsers()
           .pipe(
@@ -27,19 +28,20 @@ export class AppEffect {
     )
   );
 
-  loadProfile$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(retrieveProfile),
-      switchMap(() => {
-        console.log(this.actions$,"loadProfile");
-        return this.appService
-          .loadProfile()
-          .pipe(
-            map((data) =>
-               retrieveProfileSuccess({ userdetails: data as Profile })
-            )
-          );
-      })
-    )
+  loadProfile$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(retrieveProfile),
+        switchMap(() => {
+          console.log(this.actions$, 'loadProfile');
+          return this.appService
+            .loadProfile()
+            .pipe(
+              map((data) =>
+                retrieveProfileSuccess({ userdetails: data as Profile })
+              )
+            );
+        })
+      ),
   );
 }

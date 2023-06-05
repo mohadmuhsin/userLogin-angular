@@ -17,3 +17,4 @@ export const retrievePostsSuccess = createAction(
   props<{ allusers: Users[] }>()
   
 );
+

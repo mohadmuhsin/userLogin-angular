@@ -13,9 +13,12 @@ export class HomeComponent implements OnInit {
   message: string;
   constructor(private http: HttpClient, private toastr: ToastrService) {}
   ngOnInit(): void {
+    console.log("here its ");
+    
     this.http
       .get('http://localhost:5000/user', {
         withCredentials: true,
+        
       })
       .subscribe(
         (res: any) => {

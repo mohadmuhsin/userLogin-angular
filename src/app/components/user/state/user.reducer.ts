@@ -8,6 +8,7 @@ const initialStateOfUser: Profile = {
   email: '',
   password: '',
   image: '',
+  profileImage:'',
   __v: '',
 };
 
